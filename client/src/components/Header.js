@@ -1,22 +1,41 @@
 import React from "react";
+import { connect } from "react-redux";
 
 class Header extends React.Component {
+    renderContent() {
+        switch (this.props.auth) {
+            case null:
+                return;
+            case false:
+                return (
+                    <a href="/auth/google" className="item">
+                        Log in
+                    </a>
+                );
+            default:
+                return (
+                    <a href="/api/logout" className="item">
+                        Log out
+                    </a>
+                );
+        }
+    }
     render() {
         return (
-            <div className="ui large fixed menu">
-                <div className="ui container">
-                    <a className="header item">
-                        <img className="logo" src="images/logo.png" />
-                    </a>
-                    <div className="right menu">
-                        <a href="/auth/google" className="item">
-                            Log in
-                        </a>
+            <div className="ui massive text menu">
+                <a href="/">
+                    <div className="item">
+                        <img src={require("../assets/images/logo.png")} />
                     </div>
-                </div>
+                </a>
+
+                <div className="ui right item">{this.renderContent()}</div>
             </div>
         );
     }
 }
 
-export default Header;
+function mapStateToProps({ auth }) {
+    return { auth };
+}
+export default connect(mapStateToProps)(Header);
