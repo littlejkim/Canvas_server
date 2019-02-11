@@ -24,10 +24,12 @@ class Header extends React.Component {
         return (
             <div className="ui massive text menu">
                 <a href="/">
-                    <div className="item">
+                    <div style={{ marginRight: "1.5em" }} className="item">
                         <img src={require("../assets/images/logo.png")} />
                     </div>
                 </a>
+                <a className="active item">Home</a>
+                <a className="item">Browse</a>
 
                 <div className="ui right item">{this.renderContent()}</div>
             </div>
