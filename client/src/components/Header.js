@@ -1,5 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
+import { Link } from "react-router-dom";
 
 class Header extends React.Component {
     renderContent() {
@@ -8,9 +9,11 @@ class Header extends React.Component {
                 return;
             case false:
                 return (
-                    <a href="/auth/google" className="item">
-                        Log in
-                    </a>
+                    <div>
+                        <a href="/auth/google" className="item">
+                            Log in
+                        </a>
+                    </div>
                 );
             default:
                 return (
@@ -20,18 +23,38 @@ class Header extends React.Component {
                 );
         }
     }
+
+    renderProfile() {
+        if (!this.props.auth) {
+            return <i className="user circular bordered icon" />;
+        }
+        return (
+            <img
+                className="ui bordered avatar image"
+                src={this.props.auth.photo}
+                alt={this.props.auth.name}
+            />
+        );
+    }
+
     render() {
         return (
             <div className="ui massive text menu">
-                <a href="/">
+                <Link to={this.props.auth ? "/" : "/"}>
                     <div style={{ marginRight: "1.5em" }} className="item">
-                        <img src={require("../assets/images/logo.png")} />
+                        <img
+                            src={require("../assets/images/logo.png")}
+                            alt="logo"
+                        />
                     </div>
-                </a>
+                </Link>
                 <a className="active item">Home</a>
-                <a className="item">Browse</a>
+                <a className="item">Dashboard</a>
 
-                <div className="ui right item">{this.renderContent()}</div>
+                <div className="ui right item">
+                    {this.renderProfile()}
+                    {this.renderContent()}
+                </div>
             </div>
         );
     }
