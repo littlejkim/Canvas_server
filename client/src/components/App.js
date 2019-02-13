@@ -20,9 +20,16 @@ class App extends React.Component {
     }
     render() {
         return (
-            <div className="ui container">
+            <div style={{ height: "100%" }} className="ui container">
                 <BrowserRouter>
-                    <div>
+                    <div
+                        style={{
+                            minHeight: "100%",
+                            display: "grid",
+                            gridTemplateRows: "auto 1fr auto",
+                            gridTemplateColumns: "100%"
+                        }}
+                    >
                         <Header />
                         <Switch>
                             <Route exact path="/" component={Landing} />

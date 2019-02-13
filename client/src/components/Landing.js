@@ -29,7 +29,7 @@ class Landing extends React.Component {
                 <h1
                     style={{
                         marginTop: "3em",
-                        marginBottom: "0em",
+
                         fontSize: "4em"
                     }}
                     className="ui header"
