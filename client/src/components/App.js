@@ -7,7 +7,7 @@ import * as actions from "../actions";
 import Header from "./Header";
 import Landing from "./Landing";
 import Footer from "./Footer";
-import ScheduleCreate from "./schedules/ScheduleCreate";
+import CreateForm from "./schedules/CreateForm";
 import ProtectedRoute from "./ProtectedRoute";
 import Dashboard from "./Dashboard";
 
@@ -34,7 +34,7 @@ class App extends React.Component {
                             <ProtectedRoute
                                 exact
                                 path="/create"
-                                component={ScheduleCreate}
+                                component={CreateForm}
                             />
                             <Route component={noExistingLink} />
                         </Switch>

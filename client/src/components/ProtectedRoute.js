@@ -4,9 +4,6 @@ import { connect } from "react-redux";
 import { fetchUser } from "../actions";
 
 class ProtectedRoute extends React.Component {
-    componentDidMount() {
-        const isLoading = false;
-    }
     render() {
         const { component: Component, ...rest } = this.props;
         const isAuthenticated = this.props.auth ? true : false;
