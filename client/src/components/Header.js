@@ -1,6 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 
 class Header extends React.Component {
     renderContent() {
@@ -25,15 +25,39 @@ class Header extends React.Component {
     }
 
     renderProfile() {
+        switch (this.props.auth) {
+            case null:
+                return;
+            case false:
+                return <i className="user circular bordered icon" />;
+            default:
+                return (
+                    <img
+                        className="ui bordered avatar image"
+                        src={this.props.auth.photo}
+                        alt={this.props.auth.name}
+                    />
+                );
+        }
+    }
+
+    renderHeaderItems() {
         if (!this.props.auth) {
-            return <i className="user circular bordered icon" />;
+            return;
         }
         return (
-            <img
-                className="ui bordered avatar image"
-                src={this.props.auth.photo}
-                alt={this.props.auth.name}
-            />
+            <div className="item">
+                <NavLink activeClassName="active item" to="/">
+                    Home
+                </NavLink>
+                <NavLink
+                    activeClassName="active item"
+                    to={"/dashboard"}
+                    className="item"
+                >
+                    Dashboard
+                </NavLink>
+            </div>
         );
     }
 
@@ -48,12 +72,7 @@ class Header extends React.Component {
                         />
                     </div>
                 </Link>
-                {/* <a href="/" className="active item">
-                    Home
-                </a>
-                <a href="/dashboard" className="item">
-                    Dashboard
-                </a> */}
+                {this.renderHeaderItems()}
 
                 <div className="ui right item">
                     {this.renderProfile()}

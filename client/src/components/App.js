@@ -1,5 +1,5 @@
 import React from "react";
-import { BrowserRouter, Route, Switch } from "react-router-dom";
+import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
 import { connect } from "react-redux";
 
 import * as actions from "../actions";
@@ -10,6 +10,10 @@ import Footer from "./Footer";
 import ScheduleCreate from "./schedules/ScheduleCreate";
 import ProtectedRoute from "./ProtectedRoute";
 import Dashboard from "./Dashboard";
+
+const noExistingLink = () => {
+    return <Redirect to="/" />;
+};
 class App extends React.Component {
     componentDidMount() {
         this.props.fetchUser();
@@ -22,16 +26,17 @@ class App extends React.Component {
                         <Header />
                         <Switch>
                             <Route exact path="/" component={Landing} />
-                            <Route
+                            <ProtectedRoute
                                 exact
                                 path="/dashboard"
                                 component={Dashboard}
                             />
-                            <Route
+                            <ProtectedRoute
                                 exact
                                 path="/create"
                                 component={ScheduleCreate}
                             />
+                            <Route component={noExistingLink} />
                         </Switch>
                         <Footer />
                     </div>

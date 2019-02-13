@@ -11,7 +11,9 @@ const Dashboard = () => (
                 <i className="search icon" />
                 No skeds are listed for this user.
             </div>
-            <div className="ui primary button">Add Schedule</div>
+            <a href="/create" className="ui primary button">
+                Add Schedule
+            </a>
         </div>
     </div>
 );

@@ -1,8 +1,12 @@
 import React from "react";
 import { Route, Redirect } from "react-router-dom";
 import { connect } from "react-redux";
+import { fetchUser } from "../actions";
 
 class ProtectedRoute extends React.Component {
+    componentDidMount() {
+        const isLoading = false;
+    }
     render() {
         const { component: Component, ...rest } = this.props;
         const isAuthenticated = this.props.auth ? true : false;
@@ -10,7 +14,7 @@ class ProtectedRoute extends React.Component {
             <Route
                 {...rest}
                 render={props =>
-                    isAuthenticated ? (
+                    isAuthenticated || this.props.auth == null ? (
                         <Component {...props} />
                     ) : (
                         <Redirect
@@ -29,4 +33,7 @@ class ProtectedRoute extends React.Component {
 function mapStateToProps({ auth }) {
     return { auth };
 }
-export default connect(mapStateToProps)(ProtectedRoute);
+export default connect(
+    mapStateToProps,
+    { fetchUser }
+)(ProtectedRoute);
