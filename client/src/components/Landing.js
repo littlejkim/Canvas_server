@@ -1,5 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
+import { Link } from "react-router-dom";
 
 class Landing extends React.Component {
     renderContent() {
@@ -15,10 +16,10 @@ class Landing extends React.Component {
                 );
             default:
                 return (
-                    <a href="/create" className="ui huge yellow button">
+                    <Link to="/create" className="ui huge yellow button">
                         Create Schedule
                         <i className="right arrow icon" />
-                    </a>
+                    </Link>
                 );
         }
     }

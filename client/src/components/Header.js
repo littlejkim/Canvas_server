@@ -48,8 +48,12 @@ class Header extends React.Component {
                         />
                     </div>
                 </Link>
-                <a className="active item">Home</a>
-                <a className="item">Dashboard</a>
+                {/* <a href="/" className="active item">
+                    Home
+                </a>
+                <a href="/dashboard" className="item">
+                    Dashboard
+                </a> */}
 
                 <div className="ui right item">
                     {this.renderProfile()}

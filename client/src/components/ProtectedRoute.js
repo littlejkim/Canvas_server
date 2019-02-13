@@ -5,17 +5,22 @@ import { connect } from "react-redux";
 class ProtectedRoute extends React.Component {
     render() {
         const { component: Component, ...rest } = this.props;
-        console.log(this.props.auth);
+        const isAuthenticated = this.props.auth ? true : false;
         return (
             <Route
                 {...rest}
-                render={props => {
-                    if (true) {
-                        return <Component {...props} />;
-                    } else {
-                        return <Redirect to="/" />;
-                    }
-                }}
+                render={props =>
+                    isAuthenticated ? (
+                        <Component {...props} />
+                    ) : (
+                        <Redirect
+                            to={{
+                                pathname: "/",
+                                state: { from: props.location }
+                            }}
+                        />
+                    )
+                }
             />
         );
     }

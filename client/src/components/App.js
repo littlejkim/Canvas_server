@@ -1,5 +1,5 @@
 import React from "react";
-import { BrowserRouter, Route } from "react-router-dom";
+import { BrowserRouter, Route, Switch } from "react-router-dom";
 import { connect } from "react-redux";
 
 import * as actions from "../actions";
@@ -8,8 +8,8 @@ import Header from "./Header";
 import Landing from "./Landing";
 import Footer from "./Footer";
 import ScheduleCreate from "./schedules/ScheduleCreate";
-const Dashboard = () => <h2 style={{ textAlign: "center" }}>Dashboard</h2>;
-
+import ProtectedRoute from "./ProtectedRoute";
+import Dashboard from "./Dashboard";
 class App extends React.Component {
     componentDidMount() {
         this.props.fetchUser();
@@ -20,13 +20,19 @@ class App extends React.Component {
                 <BrowserRouter>
                     <div>
                         <Header />
-                        <Route exact path="/" component={Landing} />
-                        <Route exact path="/dashboard" component={Dashboard} />
-                        <Route
-                            exact
-                            path="/create"
-                            component={ScheduleCreate}
-                        />
+                        <Switch>
+                            <Route exact path="/" component={Landing} />
+                            <Route
+                                exact
+                                path="/dashboard"
+                                component={Dashboard}
+                            />
+                            <Route
+                                exact
+                                path="/create"
+                                component={ScheduleCreate}
+                            />
+                        </Switch>
                         <Footer />
                     </div>
                 </BrowserRouter>

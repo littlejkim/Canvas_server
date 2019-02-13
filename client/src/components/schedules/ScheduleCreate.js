@@ -1,16 +1,26 @@
 import React from "react";
-import { Redirect } from "react-router-dom";
 import { connect } from "react-redux";
-import { fetchUser } from "../../actions";
+
 class ScheduleCreate extends React.Component {
-    componentWillMount() {
-        if (!this.props.auth) {
-            console.log("Unauthorized user re-routed to landing page");
-            return <Redirect to="/" />;
-        }
-    }
     render() {
-        return <div>Create Schedule</div>;
+        return (
+            <div>
+                <h1 style={{ marginBottom: "1em" }}>Create Event</h1>
+                <div className="ui raised text segment">
+                    <div className="ui form">
+                        <div className="field">
+                            <label>Title</label>
+                            <input
+                                type="text"
+                                name="title"
+                                placeholder="Title of event"
+                                autoComplete="off"
+                            />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        );
     }
 }
 
