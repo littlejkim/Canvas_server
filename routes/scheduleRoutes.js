@@ -11,5 +11,19 @@ module.exports = app => {
         res.send(schedule);
     });
 
-    // app.get(`/schedules/fetchAll/${id}`, (req, res) => {});
+    app.get("/schedule/fetchAll", (req, res) => {
+        const schedules = Schedule.find(
+            {
+                // googldId: `${req.user.googleId}`
+                googleId: req.user.googleId
+            },
+            function(err, schedules) {
+                if (err) {
+                    console.log(err);
+                } else {
+                    res.send(schedules);
+                }
+            }
+        );
+    });
 };

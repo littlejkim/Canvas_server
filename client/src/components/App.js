@@ -35,7 +35,7 @@ class App extends React.Component {
                             <Route exact path="/" component={Landing} />
                             <ProtectedRoute
                                 exact
-                                path="/dashboard/:id"
+                                path="/dashboard"
                                 component={Dashboard}
                             />
                             <ProtectedRoute

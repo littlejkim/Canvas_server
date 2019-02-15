@@ -52,7 +52,7 @@ class Header extends React.Component {
                 </NavLink>
                 <NavLink
                     activeClassName="active item"
-                    to={`/dashboard/${this.props.auth.googleId}`}
+                    to={"/dashboard/"}
                     className="item"
                 >
                     Dashboard

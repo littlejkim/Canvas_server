@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 
 class Dashboard extends React.Component {
     componentDidMount() {
-        this.props.fetchUserSchedules(this.props.auth.googleId);
+        this.props.fetchUserSchedules();
     }
     renderContent() {
         if (false) {
@@ -21,7 +21,9 @@ class Dashboard extends React.Component {
                 </div>
             );
         } else {
-            console.log("we're here");
+            return this.props.schedule.map(schedule => {
+                return <div key={schedule._id}>{schedule.title}</div>;
+            });
         }
     }
     render() {
@@ -38,10 +40,11 @@ class Dashboard extends React.Component {
     }
 }
 
-const mapStateToProps = state => {
-    console.log(state);
-    return {};
-};
+function mapStateToProps(state) {
+    return {
+        schedule: Object.values(state.schedule)
+    };
+}
 
 export default connect(
     mapStateToProps,
