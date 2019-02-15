@@ -7,7 +7,8 @@ const userSchema = new Schema({
     displayName: String,
     lastName: String,
     firstName: String,
-    photo: String
+    photo: String,
+    date: { type: Date, default: Date.now }
 });
 
 mongoose.model("users", userSchema);

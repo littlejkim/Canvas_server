@@ -1,1 +1,2 @@
 export const FETCH_USER = "FETCH_USER";
+export const CREATE_SCHEDULE = "CREATE_SCHEDULE";
