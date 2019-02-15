@@ -1,5 +1,5 @@
 import React from "react";
-import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
+import { Router, Route, Switch, Redirect } from "react-router-dom";
 import { connect } from "react-redux";
 
 import * as actions from "../actions";
@@ -10,7 +10,7 @@ import Footer from "./Footer";
 import ScheduleCreate from "./schedules/ScheduleCreate";
 import ProtectedRoute from "./ProtectedRoute";
 import Dashboard from "./Dashboard";
-
+import history from "../history";
 const noExistingLink = () => {
     return <Redirect to="/" />;
 };
@@ -21,7 +21,7 @@ class App extends React.Component {
     render() {
         return (
             <div style={{ height: "100%" }} className="ui container">
-                <BrowserRouter>
+                <Router history={history}>
                     <div
                         style={{
                             minHeight: "100%",
@@ -35,7 +35,7 @@ class App extends React.Component {
                             <Route exact path="/" component={Landing} />
                             <ProtectedRoute
                                 exact
-                                path="/dashboard"
+                                path="/dashboard/:id"
                                 component={Dashboard}
                             />
                             <ProtectedRoute
@@ -47,7 +47,7 @@ class App extends React.Component {
                         </Switch>
                         <Footer />
                     </div>
-                </BrowserRouter>
+                </Router>
             </div>
         );
     }

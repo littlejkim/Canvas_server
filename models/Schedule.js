@@ -11,4 +11,4 @@ const scheduleSchema = new Schema(
     { collection: "schedules" }
 );
 
-module.exports = mongoose.model("schedules", scheduleSchema);
+mongoose.model("schedules", scheduleSchema);

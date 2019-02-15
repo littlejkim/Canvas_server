@@ -1,9 +1,9 @@
-import { CREATE_SCHEDULE } from "../actions/types";
-
-export default function(state = null, action) {
+import { FETCH_USER_SCHEDULES } from "../actions/types";
+import _ from "lodash";
+export default function(state = {}, action) {
     switch (action.type) {
-        case CREATE_SCHEDULE:
-            return { ...state, [action.payload.id]: action.payload };
+        case FETCH_USER_SCHEDULES:
+            return { ...state, ..._.mapKeys(action.payload, "googleId") };
         default:
             return state;
     }
