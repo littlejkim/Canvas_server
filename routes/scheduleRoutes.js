@@ -7,14 +7,19 @@ module.exports = app => {
             googleId: req.body.event.userId,
             title: req.body.event.title,
             description: req.body.event.description
-        }).save();
-        res.send(schedule);
+        }).save(function(err, schedule) {
+            if (err) {
+                console.log("Error saving schedule", err);
+            } else {
+                console.log("sending json to client", schedule);
+                res.json(schedule);
+            }
+        });
     });
 
     app.get("/schedule/fetchAll", (req, res) => {
         const schedules = Schedule.find(
             {
-                // googldId: `${req.user.googleId}`
                 googleId: req.user.googleId
             },
             function(err, schedules) {
@@ -24,6 +29,6 @@ module.exports = app => {
                     res.send(schedules);
                 }
             }
-        );
+        ).sort({ date: "descending" });
     });
 };

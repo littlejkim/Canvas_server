@@ -28,8 +28,12 @@ passport.use(
             });
 
             if (existingUser) {
+                console.log(
+                    `Account for ${existingUser.googleId} already exists.`
+                );
                 return done(null, existingUser);
             }
+
             const user = await new User({
                 googleId: profile.id,
                 email: profile.emails[0].value,
@@ -38,6 +42,7 @@ passport.use(
                 firstName: profile.name.givenName,
                 photo: profile.photos[0].value
             }).save();
+            console.log("New user created.");
             done(null, user);
         }
     )
