@@ -2,8 +2,10 @@ import React from "react";
 import { connect } from "react-redux";
 import _ from "lodash";
 import moment from "moment";
-
-import { fetchUserSchedules } from "../actions";
+import { Link } from "react-router-dom";
+import { Header, Segment, Grid, Card, Icon } from "semantic-ui-react";
+import history from "../history";
+import { fetchUserSchedules, fetchSchedule } from "../actions";
 import LoadingSpinner from "./LoadingSpinner";
 class Dashboard extends React.Component {
     constructor(props) {
@@ -21,67 +23,57 @@ class Dashboard extends React.Component {
     renderContent() {
         if (_.isEmpty(this.props.schedule)) {
             return (
-                <div className="ui placeholder segment">
-                    <div className="ui icon header">
-                        <i className="search icon" />
-                        No skeds are listed for this user.
-                    </div>
+                <Segment basic>
+                    <Header icon>
+                        <Icon name="search icon" />
+                        No skeds for this user.
+                    </Header>
                     <a href="/create" className="ui primary button">
                         Add Schedule
                     </a>
-                </div>
+                </Segment>
             );
         }
 
-        return this.props.schedule.map(schedule => {
-            return (
-                <div className="ui grid container">
-                    <div key={schedule._id} className="four wide column">
-                        <div className="ui card">
-                            <div className="content">
-                                <div className="header">{schedule.title}</div>
-                                <div className="meta">
-                                    <span className="right floated time">
-                                        {moment(schedule.date).fromNow()}
-                                    </span>
-                                    {/* <span className="category">Animals</span> */}
-                                </div>
-                                <div className="description">
-                                    <p>{schedule.description}</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div className="extra content">
-                            <div className="right floated author">
-                                <img
-                                    alt={
-                                        this.props.auth
-                                            ? this.props.auth.name
-                                            : null
+        return (
+            <Grid container columns={4}>
+                {this.props.schedule.map(schedule => {
+                    return (
+                        <Grid.Column>
+                            <Card
+                                onClick={
+                                    () => {
+                                        this.props.history.push(
+                                            `/schedule/${schedule._id}`
+                                        );
                                     }
-                                    className="ui avatar image"
-                                    src={
-                                        this.props.auth
-                                            ? this.props.auth.photo
-                                            : null
-                                    }
+                                    // implement redirect to schedule page
+                                }
+                            >
+                                <Card.Content header={schedule.title} />
+                                <Card.Content
+                                    description={schedule.description}
                                 />
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            );
-        });
+                                <Card.Content extra>
+                                    <Icon name="user" />
+                                    {moment(schedule.date).fromNow()}
+                                </Card.Content>
+                            </Card>
+                        </Grid.Column>
+                    );
+                })}
+            </Grid>
+        );
     }
     render() {
         if (this.state.loading) {
             return <LoadingSpinner />;
         }
         return (
-            <div>
+            <Segment basic>
                 <h1 style={{ marginBottom: "1em" }}>Dashboard</h1>
                 {this.renderContent()}
-            </div>
+            </Segment>
         );
     }
 }
@@ -95,5 +87,5 @@ function mapStateToProps(state) {
 
 export default connect(
     mapStateToProps,
-    { fetchUserSchedules }
+    { fetchUserSchedules, fetchSchedule }
 )(Dashboard);

@@ -31,4 +31,16 @@ module.exports = app => {
             }
         ).sort({ date: "descending" });
     });
+
+    app.get("/schedule/:id", (req, res) => {
+        const id = req.params.id;
+        const schedule = Schedule.findById(id, function(err, schedule) {
+            if (err) {
+                console.log("error fetching schedule");
+            } else {
+                console.log("success fetching schedule");
+                res.json(schedule);
+            }
+        });
+    });
 };

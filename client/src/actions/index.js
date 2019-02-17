@@ -1,6 +1,11 @@
 import axios from "axios";
 import history from "../history";
-import { FETCH_USER, FETCH_USER_SCHEDULES, CREATE_SCHEDULE } from "./types";
+import {
+    FETCH_USER,
+    FETCH_USER_SCHEDULES,
+    CREATE_SCHEDULE,
+    FETCH_SCHEDULE
+} from "./types";
 
 export const fetchUser = () => dispatch => {
     axios.get("/api/current_user").then(function(response) {
@@ -19,6 +24,12 @@ export const createSchedule = formValues => async (dispatch, getState) => {
     dispatch({ type: CREATE_SCHEDULE, payload: response.data });
     console.log("saved successfully");
     history.push("/dashboard");
+};
+
+export const fetchSchedule = id => async dispatch => {
+    const response = await axios.get(`/schedule/${id}`);
+    console.log(response);
+    dispatch({ type: FETCH_SCHEDULE, payload: response.data });
 };
 
 export const fetchUserSchedules = () => async dispatch => {

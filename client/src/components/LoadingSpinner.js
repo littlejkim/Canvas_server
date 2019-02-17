@@ -1,13 +1,12 @@
 import React from "react";
-
+import { Segment } from "semantic-ui-react";
 const LoadingSpinner = () => {
     return (
-        <div className="ui segment">
-            <div className="ui active inverted dimmer">
+        <Segment basic>
+            <div className="ui active elastic inverted dimmer">
                 <div className="ui huge text loader">Loading</div>
             </div>
-            <p />
-        </div>
+        </Segment>
     );
 };
 

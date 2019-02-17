@@ -1,5 +1,5 @@
 import React from "react";
-import { Router, Route, Switch, Redirect } from "react-router-dom";
+import { Link, Router, Route, Switch, Redirect } from "react-router-dom";
 import { connect } from "react-redux";
 
 import * as actions from "../actions";
@@ -8,6 +8,7 @@ import Header from "./Header";
 import Landing from "./Landing";
 import Footer from "./Footer";
 import ScheduleCreate from "./schedules/ScheduleCreate";
+import ScheduleShow from "./schedules/ScheduleShow";
 import ProtectedRoute from "./ProtectedRoute";
 import Dashboard from "./Dashboard";
 import Profile from "./Profile";
@@ -48,6 +49,11 @@ class App extends React.Component {
                                 exact
                                 path="/profile"
                                 component={Profile}
+                            />
+                            <ProtectedRoute
+                                exact
+                                path="/schedule/:id"
+                                component={ScheduleShow}
                             />
                             <Route component={noExistingLink} />
                         </Switch>

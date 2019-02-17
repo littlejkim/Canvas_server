@@ -27,22 +27,49 @@ class ScheduleForm extends React.Component {
     };
     render() {
         return (
-            <form
-                onSubmit={this.props.handleSubmit(this.onSubmit)}
-                className="ui form error"
-            >
-                <Field
-                    name="title"
-                    component={this.renderInput}
-                    label="Title"
-                />
-                <Field
-                    name="description"
-                    component={this.renderInput}
-                    lable="Description"
-                />
-                <button className="ui button primary">Submit</button>
-            </form>
+            <div>
+                <form
+                    onSubmit={this.props.handleSubmit(this.onSubmit)}
+                    className="ui form error"
+                >
+                    <Field
+                        name="title"
+                        component={this.renderInput}
+                        label="Title"
+                    />
+                    <Field
+                        name="description"
+                        component={this.renderInput}
+                        lable="Description"
+                    />
+                    <div className="ui form">
+                        <div className="two fields">
+                            <div className="field">
+                                <label>Start Date</label>
+                                <div className="ui calendar" id="rangestart">
+                                    <div className="ui input left icon">
+                                        <i className="calendar icon" />
+                                        <input
+                                            type="text"
+                                            placeholder="Start"
+                                        />
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="field">
+                                <label>End date</label>
+                                <div className="ui calendar" id="rangeend">
+                                    <div className="ui input left icon">
+                                        <i className="calendar icon" />
+                                        <input type="text" placeholder="End" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <button className="ui button primary">Submit</button>
+                </form>
+            </div>
         );
     }
 }
