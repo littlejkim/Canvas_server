@@ -9,16 +9,28 @@ class Landing extends React.Component {
                 return;
             case false:
                 return (
-                    <a href="/auth/google" className="ui huge yellow button">
-                        Get Started with Google
-                        <i className="right arrow icon" />
+                    <a
+                        href="/auth/google"
+                        className="ui huge yellow animated button"
+                    >
+                        <div className="visible content">
+                            Get Started with Google
+                        </div>
+                        <div className="hidden content">
+                            <i className="right arrow icon" />
+                        </div>
                     </a>
                 );
             default:
                 return (
-                    <Link to="/create" className="ui huge yellow button">
-                        Create Schedule
-                        <i className="right arrow icon" />
+                    <Link
+                        to="/create"
+                        className="ui huge yellow animated button"
+                    >
+                        <div className="visible content">Create Schedule</div>
+                        <div className="hidden content">
+                            <i className="right arrow icon" />
+                        </div>
                     </Link>
                 );
         }

@@ -29,14 +29,21 @@ class Header extends React.Component {
             case null:
                 return;
             case false:
-                return <i className="user circular bordered icon" />;
+                return (
+                    <a href="/auth/google">
+                        {" "}
+                        <i className="user circular bordered icon" />{" "}
+                    </a>
+                );
             default:
                 return (
-                    <img
-                        className="ui bordered avatar image"
-                        src={this.props.auth.photo}
-                        alt={this.props.auth.name}
-                    />
+                    <Link to="/profile">
+                        <img
+                            className="ui avatar image"
+                            src={this.props.auth.photo}
+                            alt={this.props.auth.name}
+                        />
+                    </Link>
                 );
         }
     }

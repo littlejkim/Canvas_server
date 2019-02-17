@@ -10,6 +10,7 @@ import Footer from "./Footer";
 import ScheduleCreate from "./schedules/ScheduleCreate";
 import ProtectedRoute from "./ProtectedRoute";
 import Dashboard from "./Dashboard";
+import Profile from "./Profile";
 import history from "../history";
 const noExistingLink = () => {
     return <Redirect to="/" />;
@@ -42,6 +43,11 @@ class App extends React.Component {
                                 exact
                                 path="/create"
                                 component={ScheduleCreate}
+                            />
+                            <ProtectedRoute
+                                exact
+                                path="/profile"
+                                component={Profile}
                             />
                             <Route component={noExistingLink} />
                         </Switch>
