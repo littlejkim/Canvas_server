@@ -10,7 +10,7 @@ class ScheduleCreate extends React.Component {
 
     render() {
         return (
-            <div>
+            <div className="ui text container">
                 <h3>Create Schedule</h3>
                 <ScheduleForm onSubmit={this.onSubmit} />
             </div>

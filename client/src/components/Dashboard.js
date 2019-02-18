@@ -2,8 +2,10 @@ import React from "react";
 import { connect } from "react-redux";
 import _ from "lodash";
 import moment from "moment";
-import { fetchUserSchedules, fetchSchedule } from "../actions";
+import "react-dates/initialize";
+
 import LoadingSpinner from "./LoadingSpinner";
+import { fetchUserSchedules, fetchSchedule } from "../actions";
 
 class Dashboard extends React.Component {
     constructor(props) {

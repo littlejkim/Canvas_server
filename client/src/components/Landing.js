@@ -40,7 +40,7 @@ class Landing extends React.Component {
             <div className="ui text center aligned container">
                 <h1
                     style={{
-                        marginTop: "3em",
+                        marginTop: "28%",
 
                         fontSize: "4em"
                     }}

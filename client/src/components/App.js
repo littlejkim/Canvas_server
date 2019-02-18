@@ -26,7 +26,7 @@ class App extends React.Component {
                 <Router history={history}>
                     <div
                         style={{
-                            minHeight: "100%",
+                            minHeight: "90%",
                             display: "grid",
                             gridTemplateRows: "auto 1fr auto",
                             gridTemplateColumns: "100%"

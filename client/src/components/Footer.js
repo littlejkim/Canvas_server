@@ -1,12 +1,8 @@
 import React from "react";
-import { Link } from "react-router-dom";
 class Footer extends React.Component {
     render() {
         return (
-            <div
-                style={{ marginBottom: "30px" }}
-                className="ui center aligned container"
-            >
+            <div className="ui center aligned container">
                 <div className="ui section divider" />
 
                 <div className="ui horizontal small link list">

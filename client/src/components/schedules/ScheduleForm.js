@@ -32,17 +32,23 @@ class ScheduleForm extends React.Component {
                     onSubmit={this.props.handleSubmit(this.onSubmit)}
                     className="ui form error"
                 >
-                    <Field
-                        name="title"
-                        component={this.renderInput}
-                        label="Title"
-                    />
-                    <Field
-                        name="description"
-                        component={this.renderInput}
-                        lable="Description"
-                    />
-                    <div className="ui form">
+                    <div className="ui grid">
+                        <div className="six wide column">
+                            <Field
+                                name="title"
+                                component={this.renderInput}
+                                label="Title"
+                            />
+                        </div>
+                        <div className="ten wide column">
+                            <Field
+                                name="description"
+                                component={this.renderInput}
+                                label="Description"
+                            />
+                        </div>
+                    </div>
+                    <div style={{ marginTop: "10px" }} className="ui form">
                         <div className="two fields">
                             <div className="field">
                                 <label>Start Date</label>
@@ -78,6 +84,8 @@ const validate = formValues => {
     const errors = {};
     if (!formValues.title) {
         errors.title = "must enter title";
+    } else if (formValues.title.length < 5) {
+        errors.title = "title too short";
     }
     if (!formValues.description) {
         errors.description = "must enter description";
