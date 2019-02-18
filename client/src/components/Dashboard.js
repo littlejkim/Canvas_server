@@ -2,11 +2,9 @@ import React from "react";
 import { connect } from "react-redux";
 import _ from "lodash";
 import moment from "moment";
-import { Link } from "react-router-dom";
-import { Header, Segment, Grid, Card, Icon } from "semantic-ui-react";
-import history from "../history";
 import { fetchUserSchedules, fetchSchedule } from "../actions";
 import LoadingSpinner from "./LoadingSpinner";
+
 class Dashboard extends React.Component {
     constructor(props) {
         super(props);
@@ -23,46 +21,77 @@ class Dashboard extends React.Component {
     renderContent() {
         if (_.isEmpty(this.props.schedule)) {
             return (
-                <Segment basic>
-                    <Header icon>
-                        <Icon name="search icon" />
-                        No skeds for this user.
-                    </Header>
+                <div className="ui placeholder segment">
+                    <div className="ui icon header">
+                        <i className="search icon" />
+                        No skeds are listed for this user.
+                    </div>
                     <a href="/create" className="ui primary button">
                         Add Schedule
                     </a>
-                </Segment>
+                </div>
             );
         }
 
         return (
-            <Grid container columns={4}>
+            <div className="ui three stackable cards">
+                <a
+                    href="/create"
+                    style={{
+                        justifyContent: "center",
+                        alignItems: "center"
+                    }}
+                    className="ui raised card"
+                >
+                    <div className="item">
+                        <img
+                            className="ui tiny image"
+                            src={require("../assets/images/plus-icon.png")}
+                        />
+                    </div>
+                </a>
                 {this.props.schedule.map(schedule => {
                     return (
-                        <Grid.Column>
-                            <Card
-                                onClick={
-                                    () => {
-                                        this.props.history.push(
-                                            `/schedule/${schedule._id}`
-                                        );
-                                    }
-                                    // implement redirect to schedule page
-                                }
-                            >
-                                <Card.Content header={schedule.title} />
-                                <Card.Content
-                                    description={schedule.description}
-                                />
-                                <Card.Content extra>
-                                    <Icon name="user" />
-                                    {moment(schedule.date).fromNow()}
-                                </Card.Content>
-                            </Card>
-                        </Grid.Column>
+                        <a
+                            className="ui raised card"
+                            onClick={() => {
+                                this.props.history.push(
+                                    `/schedule/${schedule._id}`
+                                );
+                            }}
+                        >
+                            <div className="content">
+                                <div className="header">{schedule.title}</div>
+                                <div className="description">
+                                    <p>{schedule.description}</p>
+                                </div>
+                                <div className="meta">
+                                    <span className="right floated time">
+                                        {moment(schedule.date).fromNow()}
+                                    </span>
+                                </div>
+                            </div>
+                            <div className="extra content">
+                                <div className="right floated author">
+                                    <img
+                                        alt={
+                                            this.props.auth
+                                                ? this.props.name
+                                                : null
+                                        }
+                                        className="ui avatar image"
+                                        src={
+                                            this.props.auth
+                                                ? this.props.auth.photo
+                                                : null
+                                        }
+                                    />
+                                </div>
+                            </div>
+                        </a>
                     );
                 })}
-            </Grid>
+            </div>
         );
     }
     render() {
@@ -70,10 +99,10 @@ class Dashboard extends React.Component {
             return <LoadingSpinner />;
         }
         return (
-            <Segment basic>
+            <div>
                 <h1 style={{ marginBottom: "1em" }}>Dashboard</h1>
                 {this.renderContent()}
-            </Segment>
+            </div>
         );
     }
 }

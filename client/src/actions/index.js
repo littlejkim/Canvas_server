@@ -28,7 +28,6 @@ export const createSchedule = formValues => async (dispatch, getState) => {
 
 export const fetchSchedule = id => async dispatch => {
     const response = await axios.get(`/schedule/${id}`);
-    console.log(response);
     dispatch({ type: FETCH_SCHEDULE, payload: response.data });
 };
 

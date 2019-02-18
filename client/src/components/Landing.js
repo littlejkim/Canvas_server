@@ -1,7 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
-import { Button, Icon } from "semantic-ui-react";
 
 class Landing extends React.Component {
     renderContent() {
@@ -12,20 +11,14 @@ class Landing extends React.Component {
                 return (
                     <a
                         href="/auth/google"
-                        // className="ui huge yellow animated button"
+                        className="ui huge yellow animated button"
                     >
-                        <Button
-                            size="huge"
-                            color="yellow"
-                            animated="horizontal"
-                        >
-                            <Button.Content hidden>
-                                <Icon name="right arrow" />
-                            </Button.Content>
-                            <Button.Content visible>
-                                Get Started with Google
-                            </Button.Content>
-                        </Button>
+                        <div className="visible content">
+                            Get Started with Google
+                        </div>
+                        <div className="hidden content">
+                            <i className="right arrow icon" />
+                        </div>
                     </a>
                 );
             default:
