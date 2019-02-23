@@ -1,7 +1,21 @@
 import React from "react";
 import { Field, reduxForm } from "redux-form";
+import DatePicker from "react-datepicker";
+
+import "react-datepicker/dist/react-datepicker.css";
 
 class ScheduleForm extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            startDate: null,
+            endDate: null
+        };
+    }
+
+    handleStartDateChange = date => this.setState({ startDate: date });
+    handleEndDateChange = date => this.setState({ endDate: date });
+
     renderError({ error, touched }) {
         if (touched && error) {
             return (
@@ -49,27 +63,22 @@ class ScheduleForm extends React.Component {
                         </div>
                     </div>
                     <div style={{ marginTop: "10px" }} className="ui form">
-                        <div className="two fields">
+                        <div className="three fields">
                             <div className="field">
                                 <label>Start Date</label>
-                                <div className="ui calendar" id="rangestart">
-                                    <div className="ui input left icon">
-                                        <i className="calendar icon" />
-                                        <input
-                                            type="text"
-                                            placeholder="Start"
-                                        />
-                                    </div>
-                                </div>
+
+                                <DatePicker
+                                    selected={this.state.startDate}
+                                    onChange={this.handleStartDateChange}
+                                />
                             </div>
                             <div className="field">
                                 <label>End date</label>
-                                <div className="ui calendar" id="rangeend">
-                                    <div className="ui input left icon">
-                                        <i className="calendar icon" />
-                                        <input type="text" placeholder="End" />
-                                    </div>
-                                </div>
+
+                                <DatePicker
+                                    selected={this.state.endDate}
+                                    onChange={this.handleEndDateChange}
+                                />
                             </div>
                         </div>
                     </div>

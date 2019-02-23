@@ -5,7 +5,7 @@ import moment from "moment";
 import "react-dates/initialize";
 
 import LoadingSpinner from "./LoadingSpinner";
-import { fetchUserSchedules, fetchSchedule } from "../actions";
+import { fetchUserSchedules } from "../actions";
 
 class Dashboard extends React.Component {
     constructor(props) {
@@ -47,6 +47,8 @@ class Dashboard extends React.Component {
                 >
                     <div className="item">
                         <img
+                            alt="Add new schedule"
+                            key="plusicon"
                             className="ui tiny image"
                             src={require("../assets/images/plus-icon.png")}
                         />
@@ -55,6 +57,7 @@ class Dashboard extends React.Component {
                 {this.props.schedule.map(schedule => {
                     return (
                         <a
+                            key={schedule._id}
                             className="ui raised card"
                             onClick={() => {
                                 this.props.history.push(
@@ -118,5 +121,5 @@ function mapStateToProps(state) {
 
 export default connect(
     mapStateToProps,
-    { fetchUserSchedules, fetchSchedule }
+    { fetchUserSchedules }
 )(Dashboard);
