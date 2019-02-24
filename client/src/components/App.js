@@ -9,6 +9,7 @@ import Landing from "./Landing";
 import Footer from "./Footer";
 import ScheduleCreate from "./schedules/ScheduleCreate";
 import ScheduleShow from "./schedules/ScheduleShow";
+import ScheduleDelete from "./schedules/ScheduleDelete";
 import ProtectedRoute from "./ProtectedRoute";
 import Dashboard from "./Dashboard";
 import Profile from "./Profile";
@@ -54,6 +55,11 @@ class App extends React.Component {
                                 exact
                                 path="/schedule/:id"
                                 component={ScheduleShow}
+                            />
+                            <ProtectedRoute
+                                exact
+                                path="/schedule/delete/:id"
+                                component={ScheduleDelete}
                             />
                             <Route component={noExistingLink} />
                         </Switch>

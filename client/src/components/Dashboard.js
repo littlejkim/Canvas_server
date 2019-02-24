@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import _ from "lodash";
 import moment from "moment";
 import "react-dates/initialize";
-
+import { Link } from "react-router-dom";
 import LoadingSpinner from "./LoadingSpinner";
 import { fetchUserSchedules } from "../actions";
 
@@ -12,11 +12,17 @@ class Dashboard extends React.Component {
         super(props);
         this.state = {
             loading: true,
-            open: false
+            open: false,
+            selectedSchedule: null
         };
     }
 
-    toggleDropDown = () => {
+    toggleDropDown = schedule => {
+        if (schedule) {
+            this.setState({ selectedSchedule: schedule });
+        } else {
+            this.setState({ selectedSchedule: null });
+        }
         this.setState({ open: !this.state.open });
     };
 
@@ -75,25 +81,37 @@ class Dashboard extends React.Component {
                                 <div
                                     onClick={event => {
                                         event.stopPropagation();
-                                    }}
-                                    onFocus={() => {
-                                        this.toggleDropDown();
+                                        this.toggleDropDown(schedule._id);
                                     }}
                                     onBlur={() => {
-                                        this.toggleDropDown();
-                                        console.log(this.state.open);
+                                        this.toggleDropDown(null);
                                     }}
-                                    tabIndex="0"
                                     className="ui right floated dropdown"
                                 >
                                     <i className="ellipsis vertical icon" />
-                                    {this.state.open ? (
-                                        <div className="menu">
+                                    {this.state.open &&
+                                    this.state.selectedSchedule ===
+                                        schedule._id ? (
+                                        <div
+                                            style={{
+                                                display: "block"
+                                            }}
+                                            className="menu"
+                                        >
                                             <div className="item">
                                                 <i className="edit icon" /> Edit
                                                 Post
                                             </div>
-                                            <div className="item">
+                                            <div
+                                                onClick={() =>
+                                                    this.props.history.push(
+                                                        `/schedule/delete/${
+                                                            schedule._id
+                                                        }`
+                                                    )
+                                                }
+                                                className="item"
+                                            >
                                                 <i className="delete icon" />{" "}
                                                 Remove Post
                                             </div>
@@ -142,7 +160,11 @@ class Dashboard extends React.Component {
             return <LoadingSpinner />;
         }
         return (
-            <div>
+            <div
+                onClick={() => {
+                    this.setState({ open: false });
+                }}
+            >
                 <h1 style={{ marginBottom: "1em" }}>Dashboard</h1>
                 {this.renderContent()}
             </div>

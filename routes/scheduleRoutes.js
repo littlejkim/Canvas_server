@@ -32,6 +32,18 @@ module.exports = app => {
         ).sort({ date: "descending" });
     });
 
+    app.delete("/schedule/delete/:id", (req, res) => {
+        const id = req.params.id;
+        Schedule.findByIdAndDelete(id, function(err, schedule) {
+            if (err) {
+                console.log("error deleting document");
+            } else {
+                console.log("success deleting " + schedule);
+                res.send(schedule);
+            }
+        });
+    });
+
     // app.get("/schedule/:id", (req, res) => {
     //     const id = req.params.id;
     //     const schedule = Schedule.findById(id, function(err, schedule) {
