@@ -35,10 +35,10 @@ require("./routes/scheduleRoutes")(app);
 
 // The "catchall" handler: for any request that doesn't
 // match one above, send back React's index.html file.
-// app.get("*", (req, res) => {
-//     console.log(__dirname);
-//     res.sendFile(path.join(__dirname + "/client/public/index.html"));
-// });
+app.get("*", (req, res) => {
+    console.log(__dirname);
+    res.sendFile(path.join(__dirname + "/client/public/index.html"));
+});
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT);
