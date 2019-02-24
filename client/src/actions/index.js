@@ -18,7 +18,9 @@ export const createSchedule = formValues => async (dispatch, getState) => {
         event: {
             userId: getState().auth.googleId,
             title: formValues.title,
-            description: formValues.description
+            description: formValues.description,
+            startDate: formValues.startDate,
+            endDate: formValues.startDate
         }
     });
     dispatch({ type: CREATE_SCHEDULE, payload: response.data });

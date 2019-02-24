@@ -11,9 +11,15 @@ class Dashboard extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            loading: true
+            loading: true,
+            open: false
         };
     }
+
+    toggleDropDown = () => {
+        this.setState({ open: !this.state.open });
+    };
+
     componentDidMount() {
         this.props
             .fetchUserSchedules()
@@ -66,6 +72,38 @@ class Dashboard extends React.Component {
                             }}
                         >
                             <div className="content">
+                                <div
+                                    onClick={event => {
+                                        event.stopPropagation();
+                                    }}
+                                    onFocus={() => {
+                                        this.toggleDropDown();
+                                    }}
+                                    onBlur={() => {
+                                        this.toggleDropDown();
+                                        console.log(this.state.open);
+                                    }}
+                                    tabIndex="0"
+                                    className="ui right floated dropdown"
+                                >
+                                    <i className="ellipsis vertical icon" />
+                                    {this.state.open ? (
+                                        <div className="menu">
+                                            <div className="item">
+                                                <i className="edit icon" /> Edit
+                                                Post
+                                            </div>
+                                            <div className="item">
+                                                <i className="delete icon" />{" "}
+                                                Remove Post
+                                            </div>
+                                            <div className="item">
+                                                <i className="hide icon" /> Hide
+                                                Post
+                                            </div>
+                                        </div>
+                                    ) : null}
+                                </div>
                                 <div className="header">{schedule.title}</div>
                                 <div className="description">
                                     <p>{schedule.description}</p>
