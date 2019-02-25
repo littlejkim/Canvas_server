@@ -23,15 +23,11 @@ class ScheduleDelete extends Component {
         );
     }
 
-    renderContent() {
-        return `Are you sure you want to delete the schedule with title?`;
-    }
-
     render() {
         return (
             <Modal
-                title="Delete Stream"
-                content={this.renderContent()}
+                title="Delete Schedule"
+                content="Are you sure you want to delete this schedule?"
                 actions={this.renderActions()}
                 onDismiss={() => this.props.history.push("/dashboard")}
             />

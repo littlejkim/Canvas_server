@@ -2,14 +2,19 @@ import React from "react";
 import { Field, reduxForm } from "redux-form";
 import DatePicker from "react-datepicker";
 
+import PlacesAutocomplete from "react-places-autocomplete";
 import "react-datepicker/dist/react-datepicker.css";
+import { ReactMultiEmail } from "react-multi-email";
+import "react-multi-email/style.css";
 
 class ScheduleForm extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
             startDate: null,
-            endDate: null
+            endDate: null,
+            location: "",
+            emails: []
         };
     }
 
@@ -40,6 +45,8 @@ class ScheduleForm extends React.Component {
         this.props.onSubmit(formValues);
     };
     render() {
+        console.log(this.state.emails);
+        const { emails } = this.state;
         return (
             <div>
                 <form
@@ -80,8 +87,102 @@ class ScheduleForm extends React.Component {
                                     onChange={this.handleEndDateChange}
                                 />
                             </div>
+                            <div className="field">
+                                <label>Location</label>
+                                <PlacesAutocomplete
+                                    value={this.state.location}
+                                    onChange={address =>
+                                        this.setState({ location: address })
+                                    }
+                                >
+                                    {({
+                                        getInputProps,
+                                        suggestions,
+                                        getSuggestionItemProps,
+                                        loading
+                                    }) => (
+                                        <div>
+                                            <input
+                                                {...getInputProps({
+                                                    placeholder:
+                                                        "Search Places ...",
+                                                    className:
+                                                        "location-search-input"
+                                                })}
+                                            />
+                                            <div className="autocomplete-dropdown-container">
+                                                {loading && (
+                                                    <div>Loading...</div>
+                                                )}
+                                                {suggestions.map(suggestion => {
+                                                    const className = suggestion.active
+                                                        ? "suggestion-item--active"
+                                                        : "suggestion-item";
+                                                    // inline style for demonstration purpose
+                                                    const style = suggestion.active
+                                                        ? {
+                                                              backgroundColor:
+                                                                  "#fafafa",
+                                                              cursor: "pointer"
+                                                          }
+                                                        : {
+                                                              backgroundColor:
+                                                                  "#ffffff",
+                                                              cursor: "pointer"
+                                                          };
+                                                    return (
+                                                        <div
+                                                            {...getSuggestionItemProps(
+                                                                suggestion,
+                                                                {
+                                                                    className,
+                                                                    style
+                                                                }
+                                                            )}
+                                                        >
+                                                            <span>
+                                                                {
+                                                                    suggestion.description
+                                                                }
+                                                            </span>
+                                                        </div>
+                                                    );
+                                                })}
+                                            </div>
+                                        </div>
+                                    )}
+                                </PlacesAutocomplete>
+                            </div>
                         </div>
                     </div>
+                    <div className="ui grid">
+                        <div className="ten wide column">
+                            <label>Invitees</label>
+                            <ReactMultiEmail
+                                placeholder="Enter email(s)"
+                                emails={emails}
+                                onChange={_emails => {
+                                    this.setState({ emails: _emails });
+                                }}
+                                getLabel={(email, index, removeEmail) => {
+                                    return (
+                                        <div data-tag key={index}>
+                                            {email}
+                                            <span
+                                                data-tag-handle
+                                                onClick={() =>
+                                                    removeEmail(index)
+                                                }
+                                            >
+                                                ×
+                                            </span>
+                                        </div>
+                                    );
+                                }}
+                            />
+                        </div>
+                    </div>
+                    <br />
                     <button className="ui button primary">Submit</button>
                 </form>
             </div>

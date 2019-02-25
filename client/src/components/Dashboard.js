@@ -12,7 +12,7 @@ class Dashboard extends React.Component {
         super(props);
         this.state = {
             loading: true,
-            open: false,
+            openOptions: false,
             selectedSchedule: null
         };
     }
@@ -23,13 +23,90 @@ class Dashboard extends React.Component {
         } else {
             this.setState({ selectedSchedule: null });
         }
-        this.setState({ open: !this.state.open });
+        this.setState({ openOptions: !this.state.openOptions });
     };
 
     componentDidMount() {
-        this.props
-            .fetchUserSchedules()
-            .then(response => this.setState({ loading: false }));
+        this.props.fetchUserSchedules().then(response => {
+            console.log("DASHBOARD: User schedules fetched successfully");
+            this.setState({ loading: false });
+        });
+    }
+
+    renderOptions(schedule) {
+        return (
+            <div
+                style={{
+                    display: "block"
+                }}
+                className="menu"
+            >
+                <div className="item">
+                    <i className="edit icon" /> Edit Post
+                </div>
+                <div
+                    onClick={() =>
+                        this.props.history.push(
+                            `/schedule/delete/${schedule._id}`
+                        )
+                    }
+                    className="item"
+                >
+                    <i className="delete icon" /> Remove Post
+                </div>
+                <div className="item">
+                    <i className="hide icon" /> Hide Post
+                </div>
+            </div>
+        );
+    }
+    renderCard(schedule) {
+        return (
+            <a
+                key={schedule._id}
+                className="ui raised card"
+                onClick={() => {
+                    this.props.history.push(`/schedule/${schedule._id}`);
+                }}
+            >
+                <div className="content">
+                    <div
+                        onClick={event => {
+                            event.stopPropagation();
+                            this.toggleDropDown(schedule._id);
+                        }}
+                        onBlur={() => {
+                            this.toggleDropDown(null);
+                        }}
+                        className="ui right floated dropdown"
+                    >
+                        <i className="ellipsis vertical icon" />
+                        {this.state.openOptions &&
+                        this.state.selectedSchedule === schedule._id
+                            ? this.renderOptions(schedule)
+                            : null}
+                    </div>
+                    <div className="header">{schedule.title}</div>
+                    <div className="description">
+                        <p>{schedule.description}</p>
+                    </div>
+                    <div className="meta">
+                        <span className="right floated time">
+                            {moment(schedule.date).fromNow()}
+                        </span>
+                    </div>
+                </div>
+                <div className="extra content">
+                    <div className="right floated author">
+                        <img
+                            alt={this.props.auth ? this.props.name : null}
+                            className="ui avatar image"
+                            src={this.props.auth ? this.props.auth.photo : null}
+                        />
+                    </div>
+                </div>
+            </a>
+        );
     }
 
     renderContent() {
@@ -66,92 +143,7 @@ class Dashboard extends React.Component {
                         />
                     </div>
                 </a>
-                {this.props.schedule.map(schedule => {
-                    return (
-                        <a
-                            key={schedule._id}
-                            className="ui raised card"
-                            onClick={() => {
-                                this.props.history.push(
-                                    `/schedule/${schedule._id}`
-                                );
-                            }}
-                        >
-                            <div className="content">
-                                <div
-                                    onClick={event => {
-                                        event.stopPropagation();
-                                        this.toggleDropDown(schedule._id);
-                                    }}
-                                    onBlur={() => {
-                                        this.toggleDropDown(null);
-                                    }}
-                                    className="ui right floated dropdown"
-                                >
-                                    <i className="ellipsis vertical icon" />
-                                    {this.state.open &&
-                                    this.state.selectedSchedule ===
-                                        schedule._id ? (
-                                        <div
-                                            style={{
-                                                display: "block"
-                                            }}
-                                            className="menu"
-                                        >
-                                            <div className="item">
-                                                <i className="edit icon" /> Edit
-                                                Post
-                                            </div>
-                                            <div
-                                                onClick={() =>
-                                                    this.props.history.push(
-                                                        `/schedule/delete/${
-                                                            schedule._id
-                                                        }`
-                                                    )
-                                                }
-                                                className="item"
-                                            >
-                                                <i className="delete icon" />{" "}
-                                                Remove Post
-                                            </div>
-                                            <div className="item">
-                                                <i className="hide icon" /> Hide
-                                                Post
-                                            </div>
-                                        </div>
-                                    ) : null}
-                                </div>
-                                <div className="header">{schedule.title}</div>
-                                <div className="description">
-                                    <p>{schedule.description}</p>
-                                </div>
-                                <div className="meta">
-                                    <span className="right floated time">
-                                        {moment(schedule.date).fromNow()}
-                                    </span>
-                                </div>
-                            </div>
-                            <div className="extra content">
-                                <div className="right floated author">
-                                    <img
-                                        alt={
-                                            this.props.auth
-                                                ? this.props.name
-                                                : null
-                                        }
-                                        className="ui avatar image"
-                                        src={
-                                            this.props.auth
-                                                ? this.props.auth.photo
-                                                : null
-                                        }
-                                    />
-                                </div>
-                            </div>
-                        </a>
-                    );
-                })}
+                {this.props.schedule.map(schedule => this.renderCard(schedule))}
             </div>
         );
     }
@@ -162,7 +154,7 @@ class Dashboard extends React.Component {
         return (
             <div
                 onClick={() => {
-                    this.setState({ open: false });
+                    this.setState({ openOptions: false });
                 }}
             >
                 <h1 style={{ marginBottom: "1em" }}>Dashboard</h1>
